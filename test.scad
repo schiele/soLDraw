@@ -4,6 +4,11 @@ use <LDraw/parts/3002.scad>
 use <LDraw/parts/3003.scad>
 use <LDraw/parts/3004.scad>
 use <LDraw/parts/3005.scad>
+use <LDraw/parts/3006.scad>
+use <LDraw/parts/3007.scad>
+use <LDraw/parts/3008.scad>
+use <LDraw/parts/3009.scad>
+use <LDraw/parts/3010.scad>
 use <LDraw/parts/3020.scad>
 use <LDraw/parts/3021.scad>
 use <LDraw/parts/3023.scad>
@@ -31,7 +36,7 @@ use <LDraw/parts/4600.scad>
 use <LDraw/parts/4624.scad>
 use <LDraw/parts/6141.scad>
 
-part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
+part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
 
 // minimum angle for a fragment
 $fa=1;
@@ -44,6 +49,11 @@ module ref(part)
     if(part=="3003") ldraw_lib__3003(); else
     if(part=="3004") ldraw_lib__3004(); else
     if(part=="3005") ldraw_lib__3005(); else
+    if(part=="3006") ldraw_lib__3006(); else
+    if(part=="3007") ldraw_lib__3007(); else
+    if(part=="3008") ldraw_lib__3008(); else
+    if(part=="3009") ldraw_lib__3009(); else
+    if(part=="3010") ldraw_lib__3010(); else
     if(part=="3020") ldraw_lib__3020(); else
     if(part=="3021") ldraw_lib__3021(); else
     if(part=="3023") ldraw_lib__3023(); else

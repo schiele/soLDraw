@@ -3,16 +3,19 @@ $fa=1;
 // minimum size of a fragment
 $fs=0.2;
 
-part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
+part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
 
 sc=2/5;
 eps=1/128;
 
 function v2(d) = [d, d];
 function v2d(s, d=0) = [s.x, s.y] * 20 - v2(d);
+function v2dl(s, d=0) = [s.x, s.y] * 40 - v2(d);
 
 module loc(s) for(i=[0:1:s.x], j=[0:1:s.y])
     translate([i*20-(s.x)*10, j*20-(s.y)*10]) children();
+module locl(s) for(i=[0:1:s.x], j=[0:1:s.y])
+    translate([i*40-(s.x)*20, j*40-(s.y)*20]) children();
 
 module stud(h, r1, r2=0, dir=1) mirror([0, 0, dir==-1?1:0])
     linear_extrude(h, center=dir==0) difference() {
@@ -41,6 +44,33 @@ module basic(s, stud=[true, true, false], cut=false)
             stud(s.z?24*s.z:8, 8, dir=-1);
 }
 
+module large(s, stud=[true, true, true], cut=false)
+    render() scale(sc) {
+    mirror([0, 0, 1]) difference() {
+        union() {
+            linear_extrude((s.z?48*s.z:8)-(cut?1:0))
+                square(v2dl(s), center=true);
+            linear_extrude(s.z?48*s.z:8)
+                square(v2dl(s, 2), center=true);
+        }
+        translate([0, 0, 4])
+            linear_extrude(s.z?48*s.z:8)
+                square(v2dl(s, 8), center=true);
+    }
+    if(stud.x) locl(s-v2(1)) stud(11, 24, stud.z?18:0);
+    if(stud.y)
+        if(s.x>1 && s.y>1) locl(s-v2(2))
+            stud(s.z?44*s.z:8, 32, 28, dir=-1);
+        else locl(s-(s.x==1?[1, 2]:[2, 1]))
+            stud(s.z?24*s.z:8, 8, dir=-1);
+    locl([s.x-1, 0]) for(i=[-1, 1])
+        translate([0, i*(s.y*20-4), -23.5])
+            cube([3, 8, 47], center=true);
+    locl([0, s.y-1]) for(i=[-1, 1])
+        translate([i*(s.x*20-4), 0, -23.5])
+            cube([8, 3, 47], center=true);
+}
+
 module p3001() /*[3001]*/ basic([4, 2, 1]);
 module p3002() /*[3002]*/ basic([3, 2, 1]);
 module p3003() /*[3003]*/ basic([2, 2, 1]);
@@ -58,6 +88,7 @@ module p3007() /*[3007]*/ render() {
 module p3008() /*[3008]*/ basic([8, 1, 1]);
 module p3009() /*[3009]*/ basic([6, 1, 1]);
 module p3010() /*[3010]*/ basic([4, 1, 1]);
+module p3011() /*[3011]*/ large([4, 2, 1]);
 module p3020() /*[3020]*/ basic([4, 2, 0]);
 module p3021() /*[3021]*/ basic([3, 2, 0]);
 module p3023() /*[3023]*/ basic([2, 1, 0]);
@@ -457,6 +488,7 @@ module soldraw(part)
     if(part=="3008") p3008(); else
     if(part=="3009") p3009(); else
     if(part=="3010") p3010(); else
+    if(part=="3011") p3011(); else
     if(part=="3020") p3020(); else
     if(part=="3021") p3021(); else
     if(part=="3023") p3023(); else

@@ -5,6 +5,7 @@ PARTS2=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/"\1", /g;s/, $//')
 PARTS3=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") \2(); else\\n/g;s/\\n$//')
 PARTS4=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") ldraw_lib__\1(); else\\n/g;s/\\n$//')
 PARTS5=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/use <LDraw\/parts\/\1.scad>\\n/g;s/\\n$//')
+PARTS6=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/\1 /g;s/ $//')
 
 sed -i -e '
 	s|^part *= *".*|'"part = $PARTS1; // [$PARTS2]"'|
@@ -16,3 +17,5 @@ sed -i -e '
 	s|^use *<soLDraw\.scad> *$|use <soLDraw.scad>\n'"$PARTS5"'|
 	/^ *if *( *part *== *".*") *.*() *; *else *$/d
 	/^use <LDraw\/parts\/.*\.scad> *$/d' test.scad
+sed -i -e '
+	s|^PARTS *:=.*|'"PARTS := $PARTS6|" Makefile

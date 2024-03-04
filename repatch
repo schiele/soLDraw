@@ -1,0 +1,18 @@
+#!/bin/bash
+PARTS=$(sed -ne 's,^module *\(.*\) *() */\*\[\(.*\)\]\*/.*,[\2]\1,p' soLDraw.scad | tr -d '\n')
+PARTS1=$(echo $PARTS | sed -e 's/\[\([^]]*\)\].*/"\1"/')
+PARTS2=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/"\1", /g;s/, $//')
+PARTS3=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") \2(); else\\n/g;s/\\n$//')
+PARTS4=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") ldraw_lib__\1(); else\\n/g;s/\\n$//')
+PARTS5=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/use <LDraw\/parts\/\1.scad>\\n/g;s/\\n$//')
+
+sed -i -e '
+	s|^part *= *".*|'"part = $PARTS1; // [$PARTS2]"'|
+	s|^module *soldraw *( *part *) *$|module soldraw(part)\n'"$PARTS3"'|
+	/^ *if *( *part *== *".*") *.*() *; *else *$/d' soLDraw.scad
+sed -i -e '
+	s|^part *= *".*|'"part = $PARTS1; // [$PARTS2]"'|
+	s|^module *ref *( *part *) *$|module ref(part)\n'"$PARTS4"'|
+	s|^use *<soLDraw\.scad> *$|use <soLDraw.scad>\n'"$PARTS5"'|
+	/^ *if *( *part *== *".*") *.*() *; *else *$/d
+	/^use <LDraw\/parts\/.*\.scad> *$/d' test.scad

@@ -12,13 +12,13 @@ jobs:
     steps:
     - name: Install OpenSCAD
       run: sudo apt-get install -y openscad
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: build
       run: make -j $(nproc) EXTRA_FLAGS:=-D'\$$fn=16'
     - name: Publish STL files
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: stl-files
         path: "*.stl"

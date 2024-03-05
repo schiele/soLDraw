@@ -1,9 +1,9 @@
+part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3022", "3023", "3024", "3026", "3027", "3028", "3029", "3030", "3031", "3032", "3033", "3034", "3035", "3036", "3037", "3038", "3039", "3040", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
+
 // minimum angle for a fragment
 $fa=1;
 // minimum size of a fragment
 $fs=0.2;
-
-part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
 
 sc=2/5;
 eps=1/128;
@@ -23,25 +23,32 @@ module stud(h, r1, r2=0, dir=1) mirror([0, 0, dir==-1?1:0])
         circle(d=r2);
     }
 
-module basic(s, stud=[true, true, false], cut=false)
-    render() scale(sc) {
-    mirror([0, 0, 1]) difference() {
-        union() {
-            linear_extrude((s.z?24*s.z:8)-(cut?1:0))
-                square(v2d(s), center=true);
-            linear_extrude(s.z?24*s.z:8)
-                square(v2d(s, 2), center=true);
-        }
-        translate([0, 0, 4])
-            linear_extrude(s.z?24*s.z:8)
+module basic(s, stud=[true, true, false], cut=false,
+    chamfer=false) render() scale(sc)
+    translate([0, chamfer?-10:0, 0]) difference() {
+    union() {
+        mirror([0, 0, 1]) difference() {
+            union() {
+                linear_extrude((s.z?24*s.z:8)-(cut?1:0))
+                    square(v2d(s), center=true);
+                linear_extrude(s.z?24*s.z:8)
+                    square(v2d(s, 2), center=true);
+            }
+            translate([0, 0, 4]) linear_extrude(s.z?24*s.z:8)
                 square(v2d(s, 8), center=true);
+        }
+        if(stud.x) loc(s-v2(1)) stud(4, 12, stud.z?8:0);
+        if(stud.y)
+            if(s.x>1 && s.y>1) loc(s-v2(2))
+                stud(s.z?24*s.z:8, 16, 12, dir=-1);
+            else loc(s-(s.x==1?[1, 2]:[2, 1]))
+                stud(s.z?24*s.z:8, 8, dir=-1);
+        if(chamfer) rotate([0, 90, 0])
+            linear_extrude(s.x*20, center=true) polygon([
+                [0, 0], [4, 0], [20, -16], [20, -20]]);
     }
-    if(stud.x) loc(s-v2(1)) stud(4, 12, stud.z?8:0);
-    if(stud.y)
-        if(s.x>1 && s.y>1) loc(s-v2(2))
-            stud(s.z?24*s.z:8, 16, 12, dir=-1);
-        else loc(s-(s.x==1?[1, 2]:[2, 1]))
-            stud(s.z?24*s.z:8, 8, dir=-1);
+    if(chamfer) rotate([45, 0, 0])
+        translate([-50, -100, 0]) cube(100);
 }
 
 module large(s, stud=[true, true, true], cut=false)
@@ -91,9 +98,24 @@ module p3010() /*[3010]*/ basic([4, 1, 1]);
 module p3011() /*[3011]*/ large([4, 2, 1]);
 module p3020() /*[3020]*/ basic([4, 2, 0]);
 module p3021() /*[3021]*/ basic([3, 2, 0]);
+module p3022() /*[3022]*/ basic([2, 2, 0]);
 module p3023() /*[3023]*/ basic([2, 1, 0]);
 module p3024() /*[3024]*/ basic([1, 1, 0]);
+module p3026() /*[3026]*/ basic([24, 6, 0]);
+module p3027() /*[3027]*/ basic([16, 6, 0]);
+module p3028() /*[3028]*/ basic([12, 6, 0]);
+module p3029() /*[3029]*/ basic([12, 4, 0]);
+module p3030() /*[3030]*/ basic([10, 4, 0]);
 module p3031() /*[3031]*/ basic([4, 4, 0]);
+module p3032() /*[3032]*/ basic([6, 4, 0]);
+module p3033() /*[3033]*/ basic([10, 6, 0]);
+module p3034() /*[3034]*/ basic([8, 2, 0]);
+module p3035() /*[3035]*/ basic([8, 4, 0]);
+module p3036() /*[3036]*/ basic([8, 6, 0]);
+module p3037() /*[3037]*/ basic([4, 2, 1], chamfer=true);
+module p3038() /*[3038]*/ basic([3, 2, 1], chamfer=true);
+module p3039() /*[3039]*/ basic([2, 2, 1], chamfer=true);
+module p3040() /*[3040]*/ basic([1, 2, 1], chamfer=true);
 module p3068b() /*[3068b]*/
     basic([2, 2, 0], stud=[false, true], cut=true);
 module p3623() /*[3623]*/ basic([3, 1, 0]);
@@ -477,44 +499,77 @@ module p6141() /*[6141]*/ render() scale(sc) {
     stud(8, 16, 12, dir=-1);
 }
 
-module soldraw(part)
-    if(part=="3001") p3001(); else
-    if(part=="3002") p3002(); else
-    if(part=="3003") p3003(); else
-    if(part=="3004") p3004(); else
-    if(part=="3005") p3005(); else
-    if(part=="3006") p3006(); else
-    if(part=="3007") p3007(); else
-    if(part=="3008") p3008(); else
-    if(part=="3009") p3009(); else
-    if(part=="3010") p3010(); else
-    if(part=="3011") p3011(); else
-    if(part=="3020") p3020(); else
-    if(part=="3021") p3021(); else
-    if(part=="3023") p3023(); else
-    if(part=="3024") p3024(); else
-    if(part=="3031") p3031(); else
-    if(part=="3068b") p3068b(); else
-    if(part=="3623") p3623(); else
-    if(part=="3641") p3641(); else
-    if(part=="3710") p3710(); else
-    if(part=="3788") p3788(); else
-    if(part=="3821") p3821(); else
-    if(part=="3822") p3822(); else
-    if(part=="3823") p3823(); else
-    if(part=="3828") p3828(); else
-    if(part=="3829a") p3829a(); else
-    if(part=="3937") p3937(); else
-    if(part=="3938") p3938(); else
-    if(part=="4070") p4070(); else
-    if(part=="4079") p4079(); else
-    if(part=="4213") p4213(); else
-    if(part=="4214") p4214(); else
-    if(part=="4215") p4215(); else
-    if(part=="4315") p4315(); else
-    if(part=="4600") p4600(); else
-    if(part=="4624") p4624(); else
-    if(part=="6141") p6141(); else
-    ;
+module not_there() {
+    echo("WARNING: Unknown part number!");
+    color("red") render() scale(sc) for(i=[90:90:360]) rotate(i)
+        polyhedron([[-10, -10, -24], [-10, -10, -20],
+                    [-10, -6, -24], [-10, -6, -20],
+                    [-6, -10, -24], [-6, -10, -20],
+                    [-6, -6, -24], [10, 10, 0],
+                    [10, 10, -4], [10, 6, 0],
+                    [10, 6, -4], [6, 10, 0],
+                    [6, 10, -4], [6, 6, 0]],
+                   [[1, 0, 2, 3], [0, 1, 5, 4],
+                    [2, 0, 4, 6], [10, 9, 7, 8],
+                    [11, 12, 8, 7], [13, 11, 7, 9],
+                    [3, 2, 12, 11], [2, 6, 8, 12],
+                    [6, 4, 10, 8], [4, 5, 9, 10],
+                    [5, 1, 13, 9], [1, 3, 11, 13]]);
+}
+
+module soldraw(part) //[AUTOGEN MODULE]
+    if(part=="3001") p3001(); else //[AUTODEL]
+    if(part=="3002") p3002(); else //[AUTODEL]
+    if(part=="3003") p3003(); else //[AUTODEL]
+    if(part=="3004") p3004(); else //[AUTODEL]
+    if(part=="3005") p3005(); else //[AUTODEL]
+    if(part=="3006") p3006(); else //[AUTODEL]
+    if(part=="3007") p3007(); else //[AUTODEL]
+    if(part=="3008") p3008(); else //[AUTODEL]
+    if(part=="3009") p3009(); else //[AUTODEL]
+    if(part=="3010") p3010(); else //[AUTODEL]
+    if(part=="3011") p3011(); else //[AUTODEL]
+    if(part=="3020") p3020(); else //[AUTODEL]
+    if(part=="3021") p3021(); else //[AUTODEL]
+    if(part=="3022") p3022(); else //[AUTODEL]
+    if(part=="3023") p3023(); else //[AUTODEL]
+    if(part=="3024") p3024(); else //[AUTODEL]
+    if(part=="3026") p3026(); else //[AUTODEL]
+    if(part=="3027") p3027(); else //[AUTODEL]
+    if(part=="3028") p3028(); else //[AUTODEL]
+    if(part=="3029") p3029(); else //[AUTODEL]
+    if(part=="3030") p3030(); else //[AUTODEL]
+    if(part=="3031") p3031(); else //[AUTODEL]
+    if(part=="3032") p3032(); else //[AUTODEL]
+    if(part=="3033") p3033(); else //[AUTODEL]
+    if(part=="3034") p3034(); else //[AUTODEL]
+    if(part=="3035") p3035(); else //[AUTODEL]
+    if(part=="3036") p3036(); else //[AUTODEL]
+    if(part=="3037") p3037(); else //[AUTODEL]
+    if(part=="3038") p3038(); else //[AUTODEL]
+    if(part=="3039") p3039(); else //[AUTODEL]
+    if(part=="3040") p3040(); else //[AUTODEL]
+    if(part=="3068b") p3068b(); else //[AUTODEL]
+    if(part=="3623") p3623(); else //[AUTODEL]
+    if(part=="3641") p3641(); else //[AUTODEL]
+    if(part=="3710") p3710(); else //[AUTODEL]
+    if(part=="3788") p3788(); else //[AUTODEL]
+    if(part=="3821") p3821(); else //[AUTODEL]
+    if(part=="3822") p3822(); else //[AUTODEL]
+    if(part=="3823") p3823(); else //[AUTODEL]
+    if(part=="3828") p3828(); else //[AUTODEL]
+    if(part=="3829a") p3829a(); else //[AUTODEL]
+    if(part=="3937") p3937(); else //[AUTODEL]
+    if(part=="3938") p3938(); else //[AUTODEL]
+    if(part=="4070") p4070(); else //[AUTODEL]
+    if(part=="4079") p4079(); else //[AUTODEL]
+    if(part=="4213") p4213(); else //[AUTODEL]
+    if(part=="4214") p4214(); else //[AUTODEL]
+    if(part=="4215") p4215(); else //[AUTODEL]
+    if(part=="4315") p4315(); else //[AUTODEL]
+    if(part=="4600") p4600(); else //[AUTODEL]
+    if(part=="4624") p4624(); else //[AUTODEL]
+    if(part=="6141") p6141(); else //[AUTODEL]
+    not_there();
 
 soldraw(part);

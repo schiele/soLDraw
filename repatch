@@ -2,20 +2,17 @@
 PARTS=$(sed -ne 's,^module *\(.*\) *() */\*\[\(.*\)\]\*/.*,[\2]\1,p' soLDraw.scad | tr -d '\n')
 PARTS1=$(echo $PARTS | sed -e 's/\[\([^]]*\)\].*/"\1"/')
 PARTS2=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/"\1", /g;s/, $//')
-PARTS3=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") \2(); else\\n/g;s/\\n$//')
-PARTS4=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") ldraw_lib__\1(); else\\n/g;s/\\n$//')
-PARTS5=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/use <LDraw\/parts\/\1.scad>\\n/g;s/\\n$//')
+PARTS3=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") \2(); else \/\/\[AUTODEL\]\\n/g;s/\\n$//')
+PARTS4=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/    if(part=="\1") ldraw_lib__\1(); else \/\/\[AUTODEL\]\\n/g;s/\\n$//')
+PARTS5=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/use <LDraw\/parts\/\1.scad> \/\/\[AUTODEL\]\\n/g;s/\\n$//')
 PARTS6=$(echo $PARTS | sed -e 's/\[\([^]]*\)\]\([^[]*\)/\1 /g;s/ $//')
 
 sed -i -e '
 	s|^part *= *".*|'"part = $PARTS1; // [$PARTS2]"'|
-	s|^module *soldraw *( *part *) *$|module soldraw(part)\n'"$PARTS3"'|
-	/^ *if *( *part *== *".*") *.*() *; *else *$/d' soLDraw.scad
-sed -i -e '
-	s|^part *= *".*|'"part = $PARTS1; // [$PARTS2]"'|
-	s|^module *ref *( *part *) *$|module ref(part)\n'"$PARTS4"'|
-	s|^use *<soLDraw\.scad> *$|use <soLDraw.scad>\n'"$PARTS5"'|
-	/^ *if *( *part *== *".*") *.*() *; *else *$/d
-	/^use <LDraw\/parts\/.*\.scad> *$/d' test.scad
+	/\/\[AUTODEL\]/d
+	s|\(\[AUTOGEN MODULE\].*\)$|\1\n'"$PARTS3"'|
+	s|\(\[AUTOGEN TEST\].*\)$|\1\n'"$PARTS4"'|
+	s|\(\[AUTOGEN TESTINC\].*\)$|\1\n'"$PARTS5"'|
+	' soLDraw.scad test.scad
 sed -i -e '
 	s|^PARTS *:=.*|'"PARTS := $PARTS6|" Makefile

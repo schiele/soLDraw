@@ -1,87 +1,115 @@
 use <soLDraw.scad>
-use <LDraw/parts/3001.scad>
-use <LDraw/parts/3002.scad>
-use <LDraw/parts/3003.scad>
-use <LDraw/parts/3004.scad>
-use <LDraw/parts/3005.scad>
-use <LDraw/parts/3006.scad>
-use <LDraw/parts/3007.scad>
-use <LDraw/parts/3008.scad>
-use <LDraw/parts/3009.scad>
-use <LDraw/parts/3010.scad>
-use <LDraw/parts/3011.scad>
-use <LDraw/parts/3020.scad>
-use <LDraw/parts/3021.scad>
-use <LDraw/parts/3023.scad>
-use <LDraw/parts/3024.scad>
-use <LDraw/parts/3031.scad>
-use <LDraw/parts/3068b.scad>
-use <LDraw/parts/3623.scad>
-use <LDraw/parts/3641.scad>
-use <LDraw/parts/3710.scad>
-use <LDraw/parts/3788.scad>
-use <LDraw/parts/3821.scad>
-use <LDraw/parts/3822.scad>
-use <LDraw/parts/3823.scad>
-use <LDraw/parts/3828.scad>
-use <LDraw/parts/3829a.scad>
-use <LDraw/parts/3937.scad>
-use <LDraw/parts/3938.scad>
-use <LDraw/parts/4070.scad>
-use <LDraw/parts/4079.scad>
-use <LDraw/parts/4213.scad>
-use <LDraw/parts/4214.scad>
-use <LDraw/parts/4215.scad>
-use <LDraw/parts/4315.scad>
-use <LDraw/parts/4600.scad>
-use <LDraw/parts/4624.scad>
-use <LDraw/parts/6141.scad>
+//[AUTOGEN TESTINC]
+use <LDraw/parts/3001.scad> //[AUTODEL]
+use <LDraw/parts/3002.scad> //[AUTODEL]
+use <LDraw/parts/3003.scad> //[AUTODEL]
+use <LDraw/parts/3004.scad> //[AUTODEL]
+use <LDraw/parts/3005.scad> //[AUTODEL]
+use <LDraw/parts/3006.scad> //[AUTODEL]
+use <LDraw/parts/3007.scad> //[AUTODEL]
+use <LDraw/parts/3008.scad> //[AUTODEL]
+use <LDraw/parts/3009.scad> //[AUTODEL]
+use <LDraw/parts/3010.scad> //[AUTODEL]
+use <LDraw/parts/3011.scad> //[AUTODEL]
+use <LDraw/parts/3020.scad> //[AUTODEL]
+use <LDraw/parts/3021.scad> //[AUTODEL]
+use <LDraw/parts/3022.scad> //[AUTODEL]
+use <LDraw/parts/3023.scad> //[AUTODEL]
+use <LDraw/parts/3024.scad> //[AUTODEL]
+use <LDraw/parts/3026.scad> //[AUTODEL]
+use <LDraw/parts/3027.scad> //[AUTODEL]
+use <LDraw/parts/3028.scad> //[AUTODEL]
+use <LDraw/parts/3029.scad> //[AUTODEL]
+use <LDraw/parts/3030.scad> //[AUTODEL]
+use <LDraw/parts/3031.scad> //[AUTODEL]
+use <LDraw/parts/3032.scad> //[AUTODEL]
+use <LDraw/parts/3033.scad> //[AUTODEL]
+use <LDraw/parts/3034.scad> //[AUTODEL]
+use <LDraw/parts/3035.scad> //[AUTODEL]
+use <LDraw/parts/3036.scad> //[AUTODEL]
+use <LDraw/parts/3037.scad> //[AUTODEL]
+use <LDraw/parts/3038.scad> //[AUTODEL]
+use <LDraw/parts/3039.scad> //[AUTODEL]
+use <LDraw/parts/3040.scad> //[AUTODEL]
+use <LDraw/parts/3068b.scad> //[AUTODEL]
+use <LDraw/parts/3623.scad> //[AUTODEL]
+use <LDraw/parts/3641.scad> //[AUTODEL]
+use <LDraw/parts/3710.scad> //[AUTODEL]
+use <LDraw/parts/3788.scad> //[AUTODEL]
+use <LDraw/parts/3821.scad> //[AUTODEL]
+use <LDraw/parts/3822.scad> //[AUTODEL]
+use <LDraw/parts/3823.scad> //[AUTODEL]
+use <LDraw/parts/3828.scad> //[AUTODEL]
+use <LDraw/parts/3829a.scad> //[AUTODEL]
+use <LDraw/parts/3937.scad> //[AUTODEL]
+use <LDraw/parts/3938.scad> //[AUTODEL]
+use <LDraw/parts/4070.scad> //[AUTODEL]
+use <LDraw/parts/4079.scad> //[AUTODEL]
+use <LDraw/parts/4213.scad> //[AUTODEL]
+use <LDraw/parts/4214.scad> //[AUTODEL]
+use <LDraw/parts/4215.scad> //[AUTODEL]
+use <LDraw/parts/4315.scad> //[AUTODEL]
+use <LDraw/parts/4600.scad> //[AUTODEL]
+use <LDraw/parts/4624.scad> //[AUTODEL]
+use <LDraw/parts/6141.scad> //[AUTODEL]
 
-part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3023", "3024", "3031", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
+part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3022", "3023", "3024", "3026", "3027", "3028", "3029", "3030", "3031", "3032", "3033", "3034", "3035", "3036", "3037", "3038", "3039", "3040", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
 
-// minimum angle for a fragment
-$fa=1;
-// minimum size of a fragment
-$fs=0.2;
+$fn=16;
 
-module ref(part)
-    if(part=="3001") ldraw_lib__3001(); else
-    if(part=="3002") ldraw_lib__3002(); else
-    if(part=="3003") ldraw_lib__3003(); else
-    if(part=="3004") ldraw_lib__3004(); else
-    if(part=="3005") ldraw_lib__3005(); else
-    if(part=="3006") ldraw_lib__3006(); else
-    if(part=="3007") ldraw_lib__3007(); else
-    if(part=="3008") ldraw_lib__3008(); else
-    if(part=="3009") ldraw_lib__3009(); else
-    if(part=="3010") ldraw_lib__3010(); else
-    if(part=="3011") ldraw_lib__3011(); else
-    if(part=="3020") ldraw_lib__3020(); else
-    if(part=="3021") ldraw_lib__3021(); else
-    if(part=="3023") ldraw_lib__3023(); else
-    if(part=="3024") ldraw_lib__3024(); else
-    if(part=="3031") ldraw_lib__3031(); else
-    if(part=="3068b") ldraw_lib__3068b(); else
-    if(part=="3623") ldraw_lib__3623(); else
-    if(part=="3641") ldraw_lib__3641(); else
-    if(part=="3710") ldraw_lib__3710(); else
-    if(part=="3788") ldraw_lib__3788(); else
-    if(part=="3821") ldraw_lib__3821(); else
-    if(part=="3822") ldraw_lib__3822(); else
-    if(part=="3823") ldraw_lib__3823(); else
-    if(part=="3828") ldraw_lib__3828(); else
-    if(part=="3829a") ldraw_lib__3829a(); else
-    if(part=="3937") ldraw_lib__3937(); else
-    if(part=="3938") ldraw_lib__3938(); else
-    if(part=="4070") ldraw_lib__4070(); else
-    if(part=="4079") ldraw_lib__4079(); else
-    if(part=="4213") ldraw_lib__4213(); else
-    if(part=="4214") ldraw_lib__4214(); else
-    if(part=="4215") ldraw_lib__4215(); else
-    if(part=="4315") ldraw_lib__4315(); else
-    if(part=="4600") ldraw_lib__4600(); else
-    if(part=="4624") ldraw_lib__4624(); else
-    if(part=="6141") ldraw_lib__6141(); else
+module ref(part) //[AUTOGEN TEST]
+    if(part=="3001") ldraw_lib__3001(); else //[AUTODEL]
+    if(part=="3002") ldraw_lib__3002(); else //[AUTODEL]
+    if(part=="3003") ldraw_lib__3003(); else //[AUTODEL]
+    if(part=="3004") ldraw_lib__3004(); else //[AUTODEL]
+    if(part=="3005") ldraw_lib__3005(); else //[AUTODEL]
+    if(part=="3006") ldraw_lib__3006(); else //[AUTODEL]
+    if(part=="3007") ldraw_lib__3007(); else //[AUTODEL]
+    if(part=="3008") ldraw_lib__3008(); else //[AUTODEL]
+    if(part=="3009") ldraw_lib__3009(); else //[AUTODEL]
+    if(part=="3010") ldraw_lib__3010(); else //[AUTODEL]
+    if(part=="3011") ldraw_lib__3011(); else //[AUTODEL]
+    if(part=="3020") ldraw_lib__3020(); else //[AUTODEL]
+    if(part=="3021") ldraw_lib__3021(); else //[AUTODEL]
+    if(part=="3022") ldraw_lib__3022(); else //[AUTODEL]
+    if(part=="3023") ldraw_lib__3023(); else //[AUTODEL]
+    if(part=="3024") ldraw_lib__3024(); else //[AUTODEL]
+    if(part=="3026") ldraw_lib__3026(); else //[AUTODEL]
+    if(part=="3027") ldraw_lib__3027(); else //[AUTODEL]
+    if(part=="3028") ldraw_lib__3028(); else //[AUTODEL]
+    if(part=="3029") ldraw_lib__3029(); else //[AUTODEL]
+    if(part=="3030") ldraw_lib__3030(); else //[AUTODEL]
+    if(part=="3031") ldraw_lib__3031(); else //[AUTODEL]
+    if(part=="3032") ldraw_lib__3032(); else //[AUTODEL]
+    if(part=="3033") ldraw_lib__3033(); else //[AUTODEL]
+    if(part=="3034") ldraw_lib__3034(); else //[AUTODEL]
+    if(part=="3035") ldraw_lib__3035(); else //[AUTODEL]
+    if(part=="3036") ldraw_lib__3036(); else //[AUTODEL]
+    if(part=="3037") ldraw_lib__3037(); else //[AUTODEL]
+    if(part=="3038") ldraw_lib__3038(); else //[AUTODEL]
+    if(part=="3039") ldraw_lib__3039(); else //[AUTODEL]
+    if(part=="3040") ldraw_lib__3040(); else //[AUTODEL]
+    if(part=="3068b") ldraw_lib__3068b(); else //[AUTODEL]
+    if(part=="3623") ldraw_lib__3623(); else //[AUTODEL]
+    if(part=="3641") ldraw_lib__3641(); else //[AUTODEL]
+    if(part=="3710") ldraw_lib__3710(); else //[AUTODEL]
+    if(part=="3788") ldraw_lib__3788(); else //[AUTODEL]
+    if(part=="3821") ldraw_lib__3821(); else //[AUTODEL]
+    if(part=="3822") ldraw_lib__3822(); else //[AUTODEL]
+    if(part=="3823") ldraw_lib__3823(); else //[AUTODEL]
+    if(part=="3828") ldraw_lib__3828(); else //[AUTODEL]
+    if(part=="3829a") ldraw_lib__3829a(); else //[AUTODEL]
+    if(part=="3937") ldraw_lib__3937(); else //[AUTODEL]
+    if(part=="3938") ldraw_lib__3938(); else //[AUTODEL]
+    if(part=="4070") ldraw_lib__4070(); else //[AUTODEL]
+    if(part=="4079") ldraw_lib__4079(); else //[AUTODEL]
+    if(part=="4213") ldraw_lib__4213(); else //[AUTODEL]
+    if(part=="4214") ldraw_lib__4214(); else //[AUTODEL]
+    if(part=="4215") ldraw_lib__4215(); else //[AUTODEL]
+    if(part=="4315") ldraw_lib__4315(); else //[AUTODEL]
+    if(part=="4600") ldraw_lib__4600(); else //[AUTODEL]
+    if(part=="4624") ldraw_lib__4624(); else //[AUTODEL]
+    if(part=="6141") ldraw_lib__6141(); else //[AUTODEL]
     ;
 
 %ref(part);

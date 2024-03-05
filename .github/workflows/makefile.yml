@@ -1,0 +1,24 @@
+name: Build Models
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install OpenSCAD
+      run: sudo apt-get install -y openscad
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: build
+      run: make -j $(nproc) EXTRA_FLAGS:=-D'\$$fn=16'
+    - name: Publish STL files
+      uses: actions/upload-artifact@v2
+      with:
+        name: stl-files
+        path: "*.stl"

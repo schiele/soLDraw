@@ -18,6 +18,7 @@ jobs:
       with:
         submodules: recursive
     - name: Cache STL Files
+      if: github.event_name != 'release'
       id: cache-stl
       uses: actions/cache@v4
       with:
@@ -26,6 +27,7 @@ jobs:
         restore-keys: |
           stlcache-${{ runner.os }}
     - name: read cache
+      if: github.event_name != 'release'
       run: .github/workflows/getcache
     - name: fast build
       if: github.event_name != 'release'
@@ -34,6 +36,7 @@ jobs:
       if: github.event_name == 'release'
       run: make -j $(nproc)
     - name: create cache
+      if: github.event_name != 'release'
       run: .github/workflows/mkcache
     - name: Publish STL files
       uses: actions/upload-artifact@v4

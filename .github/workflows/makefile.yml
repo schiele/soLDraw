@@ -15,8 +15,6 @@ jobs:
     - name: Install OpenSCAD
       run: sudo apt-get install -y openscad
     - uses: actions/checkout@v4
-      with:
-        submodules: recursive
     - name: Cache STL Files
       if: github.event_name != 'release'
       id: cache-stl

@@ -1,4 +1,4 @@
-part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3022", "3023", "3024", "3026", "3027", "3028", "3029", "3030", "3031", "3032", "3033", "3034", "3035", "3036", "3037", "3038", "3039", "3040", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
+part = "3001"; // ["3001", "3002", "3003", "3004", "3005", "3006", "3007", "3008", "3009", "3010", "3011", "3020", "3021", "3022", "3023", "3024", "3026", "3027", "3028", "3029", "3030", "3031", "3032", "3033", "3034", "3035", "3036", "3037", "3038", "3039", "3040", "3041", "3042", "3043", "3044", "3045", "3046", "3048", "3049", "3058", "3068b", "3623", "3641", "3710", "3788", "3821", "3822", "3823", "3828", "3829a", "3937", "3938", "4070", "4079", "4213", "4214", "4215", "4315", "4600", "4624", "6141"]
 
 // minimum angle for a fragment
 $fa=1;
@@ -24,32 +24,73 @@ module stud(h, r1, r2=0, dir=1) mirror([0, 0, dir==-1?1:0])
     }
 
 module basic(s, stud=[true, true, false], cut=false,
-    chamfer=false) render() scale(sc)
-    translate([0, chamfer?-10:0, 0]) difference() {
-    union() {
-        mirror([0, 0, 1]) difference() {
+    chamfer=0) render() scale(sc)
+    translate([(chamfer==2||chamfer==5)?10:0,
+               (chamfer==1||chamfer==2||chamfer==5)?-10:0, 0])
+        difference() {
             union() {
-                linear_extrude((s.z?24*s.z:8)-(cut?1:0))
-                    square(v2d(s), center=true);
-                linear_extrude(s.z?24*s.z:8)
-                    square(v2d(s, 2), center=true);
+                mirror([0, 0, 1]) difference() {
+                    union() {
+                        linear_extrude((s.z?24*s.z:8)-(cut?1:0))
+                            square(v2d(s), center=true);
+                        linear_extrude(s.z?24*s.z:8)
+                            square(v2d(s, 2), center=true);
+                    }
+                    translate([0, 0, 4])
+                        linear_extrude(s.z?24*s.z:8)
+                            square(v2d(s, 8), center=true);
+                }
+                if(stud.x) loc(s-v2(1)) stud(4, 12, stud.z?8:0);
+                if(stud.y)
+                    if(s.x>1 && s.y>1) loc(s-v2(2))
+                        stud(s.z?24*s.z:8, 16, 12, dir=-1);
+                    else loc(s-(s.x==1?[1, 2]:[2, 1]))
+                        stud(s.z?24*s.z:8, 8, dir=-1);
+                if(chamfer==5) for(i=[0, 1])
+                    mirror([i, i, 0]) intersection() {
+                        rotate([0, 90, 0])
+                            linear_extrude(s.x*20, center=true)
+                                polygon([[0, 0], [4, 0],
+                                        [20, -16], [20, -20]]);
+                        rotate([90, 90, 0])
+                            linear_extrude(s.x*20, center=true)
+                                polygon([[0, 0], [4, 0],
+                                         [20, 16], [20, 20],
+                                         [0, 20]]);
+                    }
+                if(chamfer==1||chamfer==2||
+                   chamfer==3||chamfer==4)
+                    translate([0, chamfer==4?10:0, 0])
+                    rotate([0, 90, 0])
+                        linear_extrude(s.x*20, center=true)
+                            polygon([[0, 0], [4, 0],
+                                     [20, -16], [20, -20]]);
+                if(chamfer==3)
+                    rotate([0, 90, 180])
+                        linear_extrude(s.x*20, center=true)
+                            polygon([[0, 0], [4, 0],
+                                     [20, -16], [20, -20]]);
+                if(chamfer==2||chamfer==4)
+                    rotate([0, 90, 90])
+                        linear_extrude(s.y*20, center=true)
+                            polygon([[0, 0], [4, 0],
+                                     [20, -16], [20, -20]]);
+                if(chamfer==4)
+                    rotate([0, 90, -90])
+                        linear_extrude(s.y*20, center=true)
+                            polygon([[0, 0], [4, 0],
+                                     [20, -16], [20, -20]]);
             }
-            translate([0, 0, 4]) linear_extrude(s.z?24*s.z:8)
-                square(v2d(s, 8), center=true);
+            if(chamfer>=5) intersection_for(i=[0, 90])
+                rotate([45, 0, i])
+                    translate([-50, -100, 0]) cube(100);
+            else if(chamfer) for(i=chamfer==4?[0, 90, -90]:
+                                   chamfer==3?[0, 180]:
+                                   chamfer==2?[0, 90]:[0])
+                translate([0, (i==0&&chamfer==4)?10:0, 0])
+                rotate([45, 0, i])
+                    translate([-50, -100, 0]) cube(100);
         }
-        if(stud.x) loc(s-v2(1)) stud(4, 12, stud.z?8:0);
-        if(stud.y)
-            if(s.x>1 && s.y>1) loc(s-v2(2))
-                stud(s.z?24*s.z:8, 16, 12, dir=-1);
-            else loc(s-(s.x==1?[1, 2]:[2, 1]))
-                stud(s.z?24*s.z:8, 8, dir=-1);
-        if(chamfer) rotate([0, 90, 0])
-            linear_extrude(s.x*20, center=true) polygon([
-                [0, 0], [4, 0], [20, -16], [20, -20]]);
-    }
-    if(chamfer) rotate([45, 0, 0])
-        translate([-50, -100, 0]) cube(100);
-}
 
 module large(s, stud=[true, true, true], cut=false)
     render() scale(sc) {
@@ -112,10 +153,77 @@ module p3033() /*[3033]*/ basic([10, 6, 0]);
 module p3034() /*[3034]*/ basic([8, 2, 0]);
 module p3035() /*[3035]*/ basic([8, 4, 0]);
 module p3036() /*[3036]*/ basic([8, 6, 0]);
-module p3037() /*[3037]*/ basic([4, 2, 1], chamfer=true);
-module p3038() /*[3038]*/ basic([3, 2, 1], chamfer=true);
-module p3039() /*[3039]*/ basic([2, 2, 1], chamfer=true);
-module p3040() /*[3040]*/ basic([1, 2, 1], chamfer=true);
+module p3037() /*[3037]*/ basic([4, 2, 1], chamfer=1);
+module p3038() /*[3038]*/ basic([3, 2, 1], chamfer=1);
+module p3039() /*[3039]*/ basic([2, 2, 1], chamfer=1);
+module p3040() /*[3040]*/ basic([1, 2, 1], chamfer=1);
+module p3041() /*[3041]*/ basic([4, 2, 1], chamfer=3);
+module p3042() /*[3042]*/ basic([3, 2, 1], chamfer=3);
+module p3043() /*[3043]*/ basic([2, 2, 1], chamfer=3);
+module p3044() /*[3044]*/ render() {
+    basic([1, 2, 1], stud=[false, false], chamfer=3);
+    scale(sc) mirror([0, 0, 1]) translate([0, 0, 4]) {
+        linear_extrude(20) hull() for(i=[-2.5, 2.5])
+            translate([0, i]) circle(d=3);
+        linear_extrude(15) square([20, 2], center=true);
+    }
+}
+module p3045() /*[3045]*/ basic([2, 2, 1], chamfer=2);
+module p3046() /*[3046]*/ basic([2, 2, 1], chamfer=5);
+module p3048() /*[3048]*/ render() {
+    basic([2, 1, 1], stud=[false, false], chamfer=4);
+    scale(sc) difference() {
+        mirror([0, 0, 1]) translate([0, 0, 4]) {
+            linear_extrude(20) hull() for(i=[-2.5, 2.5])
+                translate([i, 0]) circle(d=3);
+            linear_extrude(15) square([2, 20], center=true);
+        }
+        translate([0, 10, 0]) rotate([45, 0, 0])
+            translate([-50, -100, 0]) cube(100);
+    }
+}
+module p3049() /*[3049]*/ render() {
+    rotate(90) basic([1, 2, 1], chamfer=3);
+    scale(sc) intersection() {
+        rotate([0, 90, 0]) linear_extrude(40, center=true)
+            polygon([[0, 10], [0, 30], [20, 10]]);
+        rotate([90, 90, 0]) linear_extrude(60, center=true)
+            polygon([[0, 0], [20, 20], [20, 16],
+                     [4, 0], [20, -16], [20, -20]]);
+    }
+}
+
+module p3058() /*[3058]*/ render() scale(sc) {
+    mirror([0, 0, 1]) linear_extrude(4) difference() {
+        square([320, 120], center=true);
+        square([200, 40], center=true);
+        square([160, 80], center=true);
+    }
+    mirror([0, 0, 1]) linear_extrude(8) {
+        difference() {
+            square([320, 120], center=true);
+            square([312, 112], center=true);
+        }
+        difference() {
+            union() {
+                square([208, 48], center=true);
+                square([168, 88], center=true);
+            }
+            square([200, 40], center=true);
+            square([160, 80], center=true);
+        }
+    }
+    for(i=[0, 1], j=[0, 1]) mirror([i, 0, 0]) mirror([0, j, 0]) {
+        translate([80, 50, 0]) loc([7, 0]) stud(4, 12);
+        translate([120, 30, 0]) loc([3, 0]) stud(4, 12);
+        translate([130, 10, 0]) loc([2, 0]) stud(4, 12);
+        translate([0, 50, 0]) loc([8, 0]) stud(8, 8, dir=-1);
+        translate([120, 40, 0]) loc([2, 0])
+            stud(8, 16, 12, dir=-1);
+        translate([130, 0, 0]) loc([1, 2])
+            stud(8, 16, 12, dir=-1);
+    }
+}
 module p3068b() /*[3068b]*/
     basic([2, 2, 0], stud=[false, true], cut=true);
 module p3623() /*[3623]*/ basic([3, 1, 0]);
@@ -549,6 +657,15 @@ module soldraw(part) //[AUTOGEN MODULE]
     if(part=="3038") p3038(); else //[AUTODEL]
     if(part=="3039") p3039(); else //[AUTODEL]
     if(part=="3040") p3040(); else //[AUTODEL]
+    if(part=="3041") p3041(); else //[AUTODEL]
+    if(part=="3042") p3042(); else //[AUTODEL]
+    if(part=="3043") p3043(); else //[AUTODEL]
+    if(part=="3044") p3044(); else //[AUTODEL]
+    if(part=="3045") p3045(); else //[AUTODEL]
+    if(part=="3046") p3046(); else //[AUTODEL]
+    if(part=="3048") p3048(); else //[AUTODEL]
+    if(part=="3049") p3049(); else //[AUTODEL]
+    if(part=="3058") p3058(); else //[AUTODEL]
     if(part=="3068b") p3068b(); else //[AUTODEL]
     if(part=="3623") p3623(); else //[AUTODEL]
     if(part=="3641") p3641(); else //[AUTODEL]

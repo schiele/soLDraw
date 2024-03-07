@@ -269,8 +269,12 @@ module p3821() /*[3821]*/ render() scale(sc) {
                 linear_extrude(8) hull() for(i=[36, 44])
                     translate([-12, i]) circle(d=4);
         }
-        rotate([0, -90, 0]) translate([0, 0, 5])
-            linear_extrude(8) translate([-12, 44]) circle(d=4);
+        rotate([0, -90, 0]) {
+            translate([0, 0, 5]) linear_extrude(8)
+                translate([-12, 44]) circle(d=4);
+            translate([0, 0, 10]) linear_extrude(3)
+                translate([-12, 49]) square(10, center=true);
+        }
     }
 }
 

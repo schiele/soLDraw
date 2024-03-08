@@ -512,6 +512,18 @@ module p4213() /*[4213]*/ render() scale(sc) {
     }
 }
 
+module hinge() {
+        for(j=[-38, -20, 0, 20, 38]) translate([j, 0, 0])
+            rotate([0, -90, 0]) linear_extrude(4, center=true)
+                hull() for(i=[0, 4]) translate([i, 0])
+                    circle(d=8);
+        for(i=[0, 1]) mirror([i, 0, 0])
+            translate([43.25, 0, 4]) intersection() {
+                sphere(d=16);
+                translate([-11.25, 0, 0]) cube(8, center=true);
+            }
+}
+
 module p4214() /*[4214]*/ render() {
     for(i=[-30, 30]) translate([i, 0, -40]*sc)
         basic([1, 1, 0], [false, false, false]);
@@ -528,10 +540,7 @@ module p4214() /*[4214]*/ render() {
         }
         mirror([0, 0, 1]) linear_extrude(48) for(i=[-38, 38])
             translate([i, 0]) square([4, 20], center=true);
-        for(j=[-38, -20, 0, 20, 38]) translate([j, 0, 0])
-            rotate([0, -90, 0]) linear_extrude(4, center=true)
-                hull() for(i=[0, 4]) translate([i, 6])
-                    circle(d=8);
+        translate([0, 6, 0]) hinge();
     }
 }
 
@@ -545,17 +554,7 @@ module p4215() /*[4215]*/ render() {
 
 module p4315() /*[4315]*/ render() {
     basic([4, 1, 0]);
-    scale(sc) {
-        for(j=[-38, -20, 0, 20, 38]) translate([j, 0, 0])
-            rotate([0, -90, 0]) linear_extrude(4, center=true)
-                hull() for(i=[-10, -14]) translate([-4, i])
-                    circle(d=8);
-        for(i=[0, 1]) mirror([i, 0, 0])
-            translate([43.25, -14, -4]) intersection() {
-                sphere(d=16);
-                translate([-11.25, 0, 0]) cube(8, center=true);
-            }
-    }
+    scale(sc) translate([0, -10, -4]) rotate([90, 0, 0]) hinge();
 }
 
 module p4600() /*[4600]*/ render() {

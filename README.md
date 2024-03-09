@@ -7,6 +7,9 @@ CAreadme.txt or the LDraw.org website. The code itself is rewritten
 from scratch but the same license nevertheless applies to this
 project as well.
 
+The models are also slightly modified for better printability on
+FDM printers.
+
 To build the code you may use the provided Makefile.
 
 If you modify or add new parts follow the style of the part module

@@ -12,7 +12,7 @@ sed -i -e '
 	/\/\[AUTODEL\]/d
 	s|\(\[AUTOGEN MODULE\].*\)$|\1\n'"$PARTS3"'|
 	s|\(\[AUTOGEN TEST\].*\)$|\1\n'"$PARTS4"'|
-	s|\(\[AUTOGEN TESTINC\].*\)$|\1\n'"$PARTS5"'|
+	s|\(\[AUTOGEN TESTING\].*\)$|\1\n'"$PARTS5"'|
 	' soLDraw.scad test.scad
 sed -i -e '
 	s|^PARTS *:=.*|'"PARTS := $PARTS6|" Makefile

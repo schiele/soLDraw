@@ -1,5 +1,5 @@
 use <soLDraw.scad>
-//[AUTOGEN TESTINC]
+//[AUTOGEN TESTING]
 use <LDraw/parts/3001.scad> //[AUTODEL]
 use <LDraw/parts/3002.scad> //[AUTODEL]
 use <LDraw/parts/3003.scad> //[AUTODEL]
